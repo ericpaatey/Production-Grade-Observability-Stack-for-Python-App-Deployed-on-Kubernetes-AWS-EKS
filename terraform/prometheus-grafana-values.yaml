@@ -1,0 +1,16 @@
+grafana:
+  adminPassword: $VALUES
+
+  service:
+    type: LoadBalancer
+
+prometheus:
+  prometheusSpec:
+    retention: 7d
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: 20Gi

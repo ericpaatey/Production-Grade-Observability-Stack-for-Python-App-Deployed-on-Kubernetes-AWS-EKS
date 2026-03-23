@@ -1,0 +1,41 @@
+{
+  "title": "Log Analyzer Metrics",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Request Rate",
+      "targets": [
+        {
+          "expr": "rate(app_requests_total[1m])"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "CPU Usage",
+      "targets": [
+        {
+          "expr": "container_cpu_usage_seconds_total"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage",
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Pod Status",
+      "targets": [
+        {
+          "expr": "kube_pod_status_phase"
+        }
+      ]
+    }
+  ]
+}
