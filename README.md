@@ -23,7 +23,7 @@ Developer Push → GitHub → CI/CD → Docker → Amazon ECR → Terraform → 
 - **Amazon EKS** – Kubernetes cluster
 - **Amazon RDS (PostgreSQL)** – Database for storing log results
 - **Application Load Balancer (ALB)** – External traffic routing
-- **Amazon CloudWatch** – Logging and monitoring
+- **Prometheus, Grafana, OpenTelemetry and Jaeger** – Logging, monitoring, and Tracing
 - **S3 Remote State + DynamoDB Locking** – Terraform state management
 
 ---
