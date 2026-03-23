@@ -1,8 +1,8 @@
-# DevOps Build Lab – Python Log Analyzer on Kubernetes (AWS EKS)
+# Production-Grade Observability Stack (Prometheus, Grafana, OpenTelemetry, Jaeger) for a Python Application on AWS EKS 
 
-(A fully automated cloud-native deployment of a Python Log Analyzer API running on Kubernetes using AWS EKS, Terraform, Docker, and GitHub Actions.)
+(A fully automated cloud-native deployment of a Python Log Analyzer app running on Kubernetes using AWS Elastic Kubernetes Service (EKS). Automated with Terraform, Docker, and CI/CD pipeline using GitHub Actions.)
 
-This project demonstrates a modern DevOps workflow with Infrastructure as Code, CI/CD automation, containerization, and Kubernetes orchestration.
+This project demonstrates a production-grade observability stack (Prometheus, Grafana, OpenTelemetry and Jaeger) for a Python application deployed on AWS Elastic Kubernetes Service (EKS). The project further demonstrates how modern DevOps workflow with Infrastructure as Code, CI/CD automation, containerization, and Kubernetes orchestration combined with observability.
 
 ---
 
@@ -11,6 +11,8 @@ This project demonstrates a modern DevOps workflow with Infrastructure as Code, 
 The application is deployed using a fully automated pipeline:
 
 Developer Push → GitHub → CI/CD → Docker → Amazon ECR → Terraform → AWS EKS → Kubernetes Pods → ALB → Users
+
+
 
 ### Key Components
 
@@ -32,7 +34,7 @@ Developer Push → GitHub → CI/CD → Docker → Amazon ECR → Terraform → 
 
 ---
 
-## Application Overview
+## Application Overview (Summary)
 
 The **Python Log Analyzer API** processes log files and extracts useful insights such as:
 
@@ -41,29 +43,9 @@ The **Python Log Analyzer API** processes log files and extracts useful insights
 - Status code distribution
 - Suspicious activity patterns
 
-Example endpoint:
-
-POST /analyze
-
-
-Input:
-
-{
-"log": "ERROR: database connection failed"
-}
-
-
-Output:
-
-{
-"errors_detected": 1,
-"severity": "high"
-}
-
-
 ---
 
-## Infrastructure Provisioning (Terraform)
+## Infrastructure Provisioning (Terraform + Helm)
 
 Terraform provisions the following AWS resources:
 
@@ -82,25 +64,6 @@ Remote state management:
 - **Amazon S3** – Terraform state storage
 - **DynamoDB** – State locking
 
-Example:
-
-terraform {
-
-backend "s3" {
-
-bucket = "devops-build-lab-terraform-state"
-
-key = "eks/terraform.tfstate"
-
-region = "us-east-1"
-
-dynamodb_table = "terraform-locks"
-
-}
-
-}
-
-
 ---
 
 ## CI/CD Pipeline
@@ -114,34 +77,6 @@ Pipeline steps:
 3. Push image to Amazon ECR
 4. Run Terraform apply
 5. Deploy application to Kubernetes
-
-Example workflow:
-
-name: Deploy to EKS
-
-  on:
-  push:
-  branches:
-
-  main
-
-  jobs:
-  deploy:
-  runs-on: ubuntu-latest
-
-  steps:
-
-    name: Checkout
-    uses: actions/checkout@v3
-
-    name: Build Docker Image
-    run: docker build -t log-analyzer .
-
-    name: Push to ECR
-    run: echo "Push image step"
-
-  name: Terraform Apply
-  run: terraform apply -auto-approve
   
 ---
 
@@ -170,8 +105,8 @@ User → Application Load Balancer → Kubernetes Ingress → Service → Pods �
 ---
 
 ## Monitoring and Observability
+The project implements distributed tracing with OpenTelemetry and Jaeger for microservices visibility.  Custom Grafana dashboards have been designed and incorporated for real-time system monitoring. Observability has also been integrated into CI/CD pipelines (GitHub Actions)
 
-Application and cluster monitoring are handled using:
 
 - **Amazon CloudWatch Logs**
 - Container logs from EKS
@@ -185,38 +120,6 @@ This allows tracking:
 
 ---
 
-## Running Locally
-
-Clone the repository:
-
-git clone https://github.com/ericpaatey/python-log-analyzer-on-kubernetes-aws-esks-.git
-
-cd devops-build-lab-log-analyzer
-
-
-Build the container:
-
-docker build -t log-analyzer .
-
-
-Run locally:
-
-docker run -p 5000:5000 log-analyzer
-
-
----
-
-## Future Improvements
-
-Possible enhancements:
-
-- Horizontal Pod Autoscaling (HPA)
-- Prometheus + Grafana monitoring
-- Kubernetes Helm charts
-- Blue/Green deployments
-- ArgoCD GitOps deployment model
-
----
 
 ## Key DevOps Concepts Demonstrated
 
@@ -229,7 +132,7 @@ Possible enhancements:
 
 ---
 
-## Author
+## Author - Eric Paatey
 
 I built this project as part of my **DevOps Build Lab**, a series of my hands-on cloud engineering projects focused on real-world infrastructure automation.
 
